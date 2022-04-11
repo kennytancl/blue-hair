@@ -1,0 +1,2 @@
+SELECT COUNT(*) FROM hakuri_input_error WHERE 
+(DATE(dt) BETWEEN "2022-02-24" AND "2022-02-25") AND start_pic = 456456

@@ -1,0 +1,82 @@
+<?php session_start(); ?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.min.js"></script>
+</head>
+
+<body>
+    <?php
+    include 'inclu.php';
+    $addEdit = $_SESSION["addEdit"];
+    $isAdd = $addEdit == "add";
+    $isEdit = $addEdit == "edit";
+    $tableName = $_SESSION["tableName"];
+
+    $submission = LoadFieldStr('submission');
+    if ($submission) {
+        if ($isAdd) $action = "CREATE";
+        elseif ($isEdit) $action = "UPDATE";
+        LoadPY("CRUD", $action . $tableName . "_sheet", [$submission]);
+        header("Location: index.php");
+    }
+    if ($isEdit) {
+        $output = Load1Sheet($tableName, $_SESSION["sheet_id"]);
+        $output["id"] = $_SESSION["sheet_id"];
+    } elseif ($isAdd) {
+        $output["id"] = "";
+        if (!isset($_SESSION["searchFurnaceNo"])) $output["furnace_no"] = 1;
+        else $output["furnace_no"] = $_SESSION["searchFurnaceNo"];
+        $output["year"] = date('Y');
+        $output["month"] = intval(date('m'));
+        $output["checked_by"] = "";
+    }
+    ?>
+    <div class="insert newSheet">
+        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" id="recordForm" 
+            onsubmit="return SubmitStringify(this)">
+            <table>
+                <tr>
+                    <th colspan="2">
+                        NEW SHEET <span class="headAddEdit">(<?= strtoupper($addEdit) ?>)</span>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Furnace No.:</th>
+                    <td><input type="number" id="furnace_no" name="furnace_no" value="<?= $output["furnace_no"] ?>" required></td>
+                </tr>
+                <tr>
+                    <th>Year:</th>
+                    <td><input type="number" id="year" name="year" value="<?= $output["year"] ?>" required></td>
+                </tr>
+                <?php if ($tableName == $QS_FURNACE) : ?>
+                    <tr>
+                        <th>Month:</th>
+                        <td><input type="number" id="month" name="month" value="<?= $output["month"] ?>" required></td>
+                    </tr>
+                <?php endif ?>
+                <tr>
+                    <th>Checked By:</th>
+                    <td><input type="text" id="checked_by" name="checked_by" value="<?= $output["checked_by"] ?>"
+                        <?php if ($isAdd) { echo 'disabled'; } ?>></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" class="save" value="SAVE">
+                        <input type="reset" class="reset" value="RESET" onclick="ResetAll()">
+                        <a href="index.php">
+                            <input type="button" class="back" value="BACK">
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" id="id" name="id" value="<?= $output["id"] ?>">
+            <input type="hidden" id="submission" name="submission">
+        </form>
+    </div>
+    <script type="text/javascript" src="script.js"></script>
+</body>
+
+</html>

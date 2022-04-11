@@ -1,0 +1,758 @@
+@font-face {
+    font-family: rnd;
+    src: url(font/rnd.ttf);
+}
+@font-face {
+    font-family: sam;
+    src: url(font/sam.ttf);
+}
+@font-face {
+    font-family: digital;
+    src: url(font/digital.ttf);
+}
+@font-face {
+    font-family: arcade;
+    src: url(font/arcade.ttf);
+}
+
+:root {
+    --light-grey-color: rgb(230, 230, 230);
+    --light-blue-color: rgb(255, 255, 255);
+    --dark-blue-color: rgb(3, 83, 151);
+    --grey-btn-color: rgb(102, 102, 102);
+    --orange-btn-color: rgb(243, 140, 22);
+    --blue-btn-color: rgb(20, 39, 155);
+    --purple-btn-color: rgb(141, 0, 184);
+    --red-btn-color: rgb(180, 29, 2);
+    --green-btn-color: rgb(30, 117, 9);
+    --table-grey-color: rgb(99, 99, 99);
+    --light-red-color: rgb(255, 71, 71);
+    --white-trans1-color: rgba(255, 255, 255, 0.4);
+    --white-trans2-color: rgba(255, 255, 255, 0.5);
+    --white-trans3-color: rgba(255, 255, 255, 0.6);
+    --white-trans4-color: rgba(255, 255, 255, 0.7);
+}
+
+.blue {
+    background-color: var(--blue-btn-color);
+}
+
+.green {
+    background-color: var(--green-btn-color);
+}
+
+.displayNone {
+    display: none;
+}
+
+.visibleHide {
+    visibility: hidden;
+}
+
+@keyframes shakeAndBig {
+    0% { transform: translate(1px, 1px) rotate(0deg) scale(2); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg) scale(1.9); }
+    20% { transform: translate(-3px, 0px) rotate(1deg) scale(1.8); }
+    30% { transform: translate(3px, 2px) rotate(0deg) scale(1.7); }
+    40% { transform: translate(1px, -1px) rotate(1deg) scale(1.6); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg) scale(1.5); }
+    60% { transform: translate(-3px, 1px) rotate(0deg) scale(1.6); }
+    70% { transform: translate(3px, 1px) rotate(-1deg) scale(1.7); }
+    80% { transform: translate(-1px, -1px) rotate(1deg) scale(1.8); }
+    90% { transform: translate(1px, 2px) rotate(0deg) scale(1.9); }
+    100% { transform: translate(1px, -2px) rotate(-1deg) scale(2); }
+}
+
+@keyframes bkg {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /* For old browsers */
+    background: #a8ff78; 
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #78ffd6, #a8ff78); 
+    animation: bkg 15s ease infinite;
+    background-size: 500% 500%;
+    background-repeat: inherit;
+    background-attachment: fixed;
+}
+
+h1 {
+    text-align: center;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    width: max-content;
+    height: 45px;
+    padding: 6px;
+}
+
+th {
+    background-color: var(--light-grey-color);
+}
+
+select {
+    border: 2px solid var(--dark-blue-color);
+    padding: 4px 8px;
+}
+
+label{
+    font-weight: bold;
+    line-height: 1.8;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+input[type="datetime-local"] {
+    padding: 6px 8px;
+}
+
+select,
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+input[type="datetime-local"] {
+    border-radius: 4px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+body.index table.mainTable {
+    width: 98vw;
+}
+
+body.index table.mainTable,
+body.index table.mainTable td{
+    border: none;
+}
+
+body.index table.mainTable td:nth-child(1) {
+    width: 18.5%;
+}
+
+body.index table.mainTable td.seikei_tms {
+    width: 100%;
+}
+
+body.index table.mainTable td.seikei_zy3_4,
+body.index table.mainTable td.seikei_zy3_6 {
+    vertical-align: top;
+}
+
+body.index table.mainTable td.seikei_zy3_4 {
+    width: 20%;
+}
+
+body.index table.mainTable td.seikei_zy3_6 {
+    width: 80%;
+}
+
+body.index h1 {
+    width: 100%;
+    font-size: 26px;
+    margin: 12px auto;    
+}
+
+body.index div.wr.head {
+    width: 100%;
+    text-align: center;
+}
+
+body.index h1.wr {
+    width: fit-content;
+    border: 3px solid var(--dark-blue-color);
+    border-radius: 40px 0 40px 0;
+    color: var(--dark-blue-color);
+    background-color: var(--white-trans2-color);
+    padding: 15px 70px;
+    font-size: 36px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body.index a#headLink {
+    text-decoration: none;
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+}
+
+body.index h3 {
+    margin: 2px auto;
+}
+
+body.index div.legend, 
+body.index div.mainBox {
+    border-radius: 10px;
+    height: min-content;
+    padding: 6px;
+}
+
+body.index div.legend {
+    min-width: 15%;
+    border: 5px dotted rgb(107, 107, 107);
+    background-color: rgba(255, 255, 255, 0.5);
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    padding: 18px 18px 4px 18px;
+}
+
+body.index div#legendDetail {
+    margin: 20px auto 10px auto;
+    padding: 16px 12px;
+    font-weight: bold;
+    font-size: 14pt;
+    border: 8px double black;
+    border-radius: 30px;
+    background-color: rgb(214, 214, 214);
+}
+
+body.index div#legendDetail h3 {
+    text-align: center;
+}
+
+body.index div.levelBox {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 8px;
+    margin: 0 auto;
+}
+
+body.index div.levelBox > div {
+    width: 80px;
+}
+
+body.index div.levelBox p {
+    font-size: 10pt;
+    padding: 6px;
+}
+
+body.index div.mainBox {
+    display: grid;
+    gap: 8px;
+    border: 5px dashed rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+body.index div.mainBox.seikei_tms {
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+}
+
+body.index div.mainBox.seikei_zy3_4 {
+    grid-template-columns: auto auto auto auto;
+}
+
+body.index div.mainBox.seikei_zy3_6 {
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+}
+
+body.index div.seikei_zy3 {
+    margin-bottom: 20px;
+}
+
+div.workRateBox {
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    padding: 0 6% 16% 6%;
+    max-width: 60px;
+    /* padding-bottom: 16%; */
+}
+
+@keyframes shakeAndBig {
+    0% { transform: translate(1px, 1px) rotate(0deg) scale(2); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg) scale(1.9); }
+    20% { transform: translate(-3px, 0px) rotate(1deg) scale(1.8); }
+    30% { transform: translate(3px, 2px) rotate(0deg) scale(1.7); }
+    40% { transform: translate(1px, -1px) rotate(1deg) scale(1.6); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg) scale(1.5); }
+    60% { transform: translate(-3px, 1px) rotate(0deg) scale(1.6); }
+    70% { transform: translate(3px, 1px) rotate(-1deg) scale(1.7); }
+    80% { transform: translate(-1px, -1px) rotate(1deg) scale(1.8); }
+    90% { transform: translate(1px, 2px) rotate(0deg) scale(1.9); }
+    100% { transform: translate(1px, -2px) rotate(-1deg) scale(2); }
+}
+
+div.mainBox div.workRateBox:hover, 
+div.mainBox div.wrSlide.hov {
+    z-index: 1;
+    animation: shakeAndBig 0.5s linear infinite;
+}
+
+div.legend div.workRateBox {
+    background-color: rgba(221, 221, 221, 0.2);
+}
+
+div.mainBox div.workRateBox {
+    background-color: rgba(250, 250, 250, 0.8);
+    cursor: pointer;
+}
+
+/* Wave Effect */
+.level, .level-back {
+    height: 70px;
+    box-sizing: border-box;
+    /* width: 90%; */
+}
+
+.level {
+    border: 1px double black;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.wave {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    background: #4a72f5;
+    /* background: #00d100; */
+    /* box-shadow: inset 0 0 50px rgba(2, 0, 99, 0.3); */
+}
+
+.wave:before,
+.wave:after
+{
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -28px;
+    left: 50%;
+    transform: translate(-50%, -75%);
+}
+
+@keyframes rotTrans {
+    0%{
+        transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100%{
+        transform: translate(-50%, -75%) rotate(360deg);
+    }
+}
+
+.wave:before{
+    border-radius: 45%;
+    background: rgba(255, 255, 255, 1);
+    animation: rotTrans 5s linear infinite;
+}
+
+.wave:after{
+    border-radius: 40%;
+    background: rgba(255, 255, 255, .5);
+    animation: rotTrans 10s linear infinite;
+}
+
+div.noData .level {
+    background-color: transparent;
+    border-style: dotted;
+}
+
+div.noData .wave {
+    visibility: hidden;
+}
+
+div.noRun .wave:before {
+    background: var(--light-red-color);
+}
+
+div.noRun .wave:before,
+div.noRun .wave:after {
+    animation: none;
+}
+
+div.noRun .wave {
+    top: 60px;
+}
+
+div.wr20 .wave {
+    top: 56px;
+}
+
+div.wr40 .wave {
+    top: 42px;
+}
+
+div.wr60 .wave {
+    top: 28px;
+}
+
+div.wr80 .wave {
+    top: 14px;
+}
+
+div.wr100 .wave {
+    top: 0;
+}
+
+div.wrMax .wave:before,
+div.wrMax .wave:after {
+    top: -30px;
+    width: 0;
+    height: 0;
+}
+
+/* Flip Effect */
+/* .level-box,
+.level-back {
+} */
+
+.level-box {
+    background-color: transparent;
+}
+
+.level-box-inner {
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.level-back,
+div.workRateBox:hover .level-box-inner, 
+div.wrSlide.hov .level-box-inner,
+div.wrSlide.flip .level-box-inner {
+    transform: rotateY(180deg);
+}
+
+.level-back {
+    border: 2px dashed black;
+    background-color: white;
+}
+
+.level-back.wrLT95,
+.level-back.wrMT95 {
+    border-color: rgb(231, 231, 231);
+    color: white;
+}
+
+.level-back.wrLT95{
+    background-color: red;
+
+}
+
+.level-back.wrMT95 {
+    background-color: green;
+    color: white;
+}
+
+.level-back span{
+    position: relative;
+    top: 20px;
+    font-weight: bold;
+}
+
+div.mainBox .level {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+div.mainBox .level, .level-back {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+table.autoDisplay {
+    margin: 0 0 0 auto;
+    width: 200px;
+}
+
+table.autoDisplay,
+table.autoDisplay td {
+    border: none;
+    /* display: inline-block; */
+    /* height: 10px; */
+    font-size: 12pt;
+}
+
+div.mainBox div.wr,
+div.mainBox div.event {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    padding: 4px;
+    bottom: 0;
+    right: 0;
+}
+
+div.mainBox div.event img {
+    width: 30px;
+    height: 30px;
+}
+
+@keyframes rot {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+div.event img.rot {
+    animation: rot 5s linear infinite;
+}
+
+/* WR.php */
+div.wrContainer {
+    display: flex;
+    gap: 40px;
+    /* border: 1px solid black; */
+    margin: 0 40px;
+}
+
+div.wrContainer td.selectMachine {
+    padding: 0;
+}
+
+div.wrContainer select.selectMachine {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    text-align-last: center;
+    padding: 5px;
+    margin: -30px;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    font-size: 30px;
+}
+
+table.wr {
+    width: 100%;
+    height: min-content;
+}
+
+table.wr *{
+    border: 3px solid rgb(54, 54, 54);
+}
+
+table.wr th {
+    font-size: 26px;
+}
+
+table.wr td {
+    text-align: center;
+    font-size: 34px;
+}
+
+table.wr td {
+    background-color: white;
+    font-family: digital;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+table.wr td.red {
+    background-color: var(--light-red-color);
+    color: white;
+}
+
+table.wr tr th.machineNo,
+table.wr tr td.machineNo {
+    min-width: 10%;
+}
+
+table.wr tr td.machineNo,
+table.wr tr td.target {
+    font-weight: 800;
+    color: white;
+    border-bottom: 3px solid white;
+}
+
+table.wr tr td.machineNo {
+    background-color: rgb(90, 90, 90);
+}
+
+table.wr tr td.target {
+    background-color: rgb(150, 150, 150);
+}
+
+table.wr th.target,
+table.wr td.target,
+table.wr th.timeBlock,
+table.wr td.timeBlock {
+    min-width: 90px;
+}
+
+p.wr {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--dark-blue-color);
+    position: absolute;
+    top: 4px;
+}
+
+p.wr.datadate {
+    left: 50px;
+}
+
+p.wr.day {
+    right: 50px;
+}
+
+/* Loading */
+div.loader-container {
+    margin: 0;
+    height: 87vh;
+    width: 100%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+div.loader-container p {
+    position: absolute;
+    font-weight: bolder;
+    font-size: 56px;
+    top: 59%;
+    color: black;
+}
+
+.loader {
+    width: 16em;
+    height: 8em;
+    position: relative;
+    overflow: hidden;
+    transform: scale(1.8);
+}
+
+.loader::before,
+.loader::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+}
+
+.loader::before {
+    width: 100%;
+    height: 0.2em;
+    background-color: black;
+}
+
+.loader::after {
+    box-sizing: border-box;
+    width: 50%;
+    height: inherit;
+    border: 0.2em solid black;
+    border-radius: 50%;
+    left: 25%;
+}
+
+.loader span {
+    position: absolute;
+    width: 5%;
+    height: 10%;
+    background-color: var(--dark-blue-color);
+    border-radius: 50%;
+    bottom: 0.2em;
+    left: -5%;
+    animation: 4s linear infinite;
+    transform-origin: 50% -3em;
+    animation-name: run, rotating;
+}
+
+.loader span:nth-child(2) {animation-delay: 0.15s;}
+.loader span:nth-child(3) {animation-delay: 0.30s;}
+
+@keyframes run {
+    0% {left: -5%;}
+    10%, 60% {left: calc((100% - 5%) / 2);}
+    70%, 100% {left: 101%;}
+}
+
+@keyframes rotating {
+    0%, 10% {transform: rotate(0deg);}
+    60%, 100% {transform: rotate(-1turn);}
+}

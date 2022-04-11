@@ -1,0 +1,248 @@
+:root {
+    --light-grey-color: rgb(230, 230, 230);
+    --dark-blue-color: rgb(3, 83, 151);
+    --grey-btn-color: rgb(102, 102, 102);
+    --orange-btn-color: rgb(243, 140, 22);
+    --blue-btn-color: rgb(20, 39, 155);
+    --purple-btn-color: rgb(141, 0, 184);
+    --red-btn-color: rgb(180, 29, 2);
+    --green-btn-color: rgb(30, 117, 9);
+    --table-grey-color: rgb(245, 245, 245);
+    --white-trans1-color: rgba(255, 255, 255, 0.4);
+    --white-trans2-color: rgba(255, 255, 255, 0.5);
+    --white-trans3-color: rgba(255, 255, 255, 0.6);
+    --white-trans4-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes bkg {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /* For old browsers */
+    background: #a8ff78; 
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #78ffd6, #a8ff78); 
+    animation: bkg 15s ease infinite;
+    background-size: 500% 500%;
+    background-repeat: inherit;
+    background-attachment: fixed;
+}
+
+h1 {
+    text-align: center;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    width: max-content;
+    height: 45px;
+    padding: 0 8px;
+}
+
+th{
+    background-color: var(--light-grey-color);
+}
+
+table tr td {
+    background-color: var(--white-trans2-color);
+}
+
+div.index table tr.even td {
+    background-color: var(--white-trans4-color);
+}
+
+select {
+    border: 2px solid var(--dark-blue-color);
+    padding: 4px 8px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+    padding: 6px 8px;
+}
+
+select,
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+    border-radius: 4px;
+}
+
+img.working {
+    animation: rotation 2s infinite linear;
+    width: 50px;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+div.index input.endPic {
+    width: 100px;
+}
+
+div.insert,
+div.index {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+div.insert th,
+div.insert td {
+    min-width: 80px;
+}
+
+div.insert th:last-child,
+div.insert td:last-child {
+    width: 90px;
+}
+
+div.insert td{
+    text-align: center;
+}
+
+div.insert input[type="submit"],
+div.insert input[type="reset"],
+div.insert input[type="button"],
+div.index button {
+    border-radius: 18px;
+    color: white;
+    padding: 6px 16px;
+}
+
+div.insert img.tankImgNo {
+    height: 60px;
+} 
+
+div.insert input.save {
+    background-color: var(--grey-btn-color);
+}
+
+div.insert input.reset {
+    background-color: var(--orange-btn-color);
+}
+
+div.insert input.back {
+    background-color: var(--blue-btn-color);
+}
+
+div.insert span.headAddEdit {
+    color: var(--green-btn-color);
+}
+
+div.index h1 {
+    width: fit-content;
+    border: 2px solid var(--dark-blue-color);
+    border-radius: 40px 0 40px 0;
+    color: var(--dark-blue-color);
+    background-color: var(--white-trans2-color);
+    margin: 20px auto;
+    padding: 15px 70px;
+}
+
+div.indexHome table {
+    width: 95vw;
+}
+
+div.index td{
+    text-align: center;
+}
+
+div.index button.top {
+    margin-top: 20px;
+}
+
+div.index > button:nth-child(1),
+div.index > button:nth-child(2) {
+    float: right;
+}
+
+div.index button.export4 ,
+div.index button.export5 {
+    float: left;
+}
+
+div.index button { 
+    background-color: var(--dark-blue-color);
+}
+
+div.index button.export4 {
+    margin-left: 180px;
+}
+
+div.index button.itemAll,
+div.index button.export4 {
+    margin-right: 10px;
+}
+
+div.index button.edit{
+    background-color: var(--purple-btn-color);
+    margin: 5px 0 3px 0;
+}
+
+div.index button.delete{
+    background-color: var(--red-btn-color);
+    margin-bottom: 5px;
+}
+
+div.index button.now,
+div.index button.save,
+div.itemAll button.sort{
+    background-color: var(--green-btn-color);
+}
+
+div.index button.save{
+    margin: 5px 0 0 0;
+}
+
+div.index td.dt{
+    line-height: 1.5;
+}
+
+div.index form#search{
+    position: absolute;
+    top: 20px;
+    left: 30px;
+}
+
+div.index form#search label{
+    font-weight: bold;
+    line-height: 1.8;
+}
+
+div.index p.noRecord{
+    width: 95vw;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+div.itemAll button.back {
+    float: left;
+}
+
+div.itemAll tr.uniqueFalse{
+    background-color: rgb(255, 204, 170);
+}

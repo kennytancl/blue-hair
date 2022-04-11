@@ -1,0 +1,137 @@
+<?php
+for ($x = 1; $x <= 4; $x++) {
+    $selectAll = 'onClick="this.setSelectionRange(0, this.value.length)"';
+    echo '<input type="hidden" id="itemID' . $x . '" name="itemID' . $x . '" value="';
+    if (count($itemIDs) > $x - 1) {
+        echo $itemIDs[$x - 1];
+    }
+    echo '">
+        <tr>
+            <td id="tankNo' . $x . '">' . $x . '</td>
+            <td>
+                <input type="text" id="itemName' . $x . '" name="itemName' . $x . '"' .
+        $selectAll . 'value="';
+    if (count($itemNames) > $x - 1) {
+        echo $itemNames[$x - 1];
+    }
+    echo '">
+            </td>
+            <td>
+                <input type="text" id="lotNo' . $x . '" name="lotNo' . $x . '"' .
+        $selectAll . 'value=';
+    if (count($lotNos) > $x - 1) {
+        echo $lotNos[$x - 1];
+    }
+    echo '>
+            </td>
+            <td id="result' . $x . '">';
+    if (count($itemNames) > $x - 1) {
+        if (in_array($itemNames[$x - 1], $errorItems)) {
+            echo 'NG';
+        } else {
+            echo 'OK';
+        }
+    }
+    echo '</td>
+        </tr>';
+}
+?>
+
+<?= $_SERVER['PHP_SELF'] ?>
+
+
+// $itemNames = array();
+// $lotNos = array();
+// foreach($editRec["items"] as $i){
+//     array_push($itemNames, $i["item_name"]);
+//     array_push($lotNos, $i["lot_no"]);
+// }
+// $machine_no = $editRec["machine_no"];
+// $start_pic = $editRec["start_pic"];
+// $end_pic = $editRec["end_pic"];
+// $start_dt = explode(',', $editRec["start_dt"]);
+// $start_date = $start_dt[0]; $start_time = $start_dt[1];
+// $finish_dt = explode(',', $editRec["finish_dt"]);
+// $finish_date = $finish_dt[0]; $finish_time = $finish_dt[1];
+
+// $itemNames = array();
+// $lotNos = array();
+// foreach($submission["rec_items"] as $item){
+//     if(isset($item["item_name"]) && isset($item["lot_no"])) {
+//         array_push($itemNames, $item["item_name"]);
+//         array_push($lotNos, $item["lot_no"]);
+//     }
+// }
+// $machine_no = $submission["machine_no"];
+// $start_pic = $submission["start_pic"];
+// $end_pic = $submission["end_pic"];
+// $start_dt = explode(',', $submission["start_dt"]);
+// $start_date = $start_dt[0]; $start_time = $start_dt[1];
+// $finish_dt = explode(',', $submission["finish_dt"]);
+// $finish_date = $finish_dt[0]; $finish_time = $finish_dt[1];
+
+
+// function GetIsset(string $nameStr): string
+// {
+//     return isset($_REQUEST[$nameStr]) ? $_REQUEST[$nameStr] : "";
+// }
+
+
+
+from imp import cnx, cursor, linked, json, datetime
+from CRUD import read as CRUDread
+import os
+from xlrd import open_workbook
+from xlutils.copy import copy
+from copy import deepcopy
+
+TEMP_FILE = './excel/HAKURI BARREL RECORD.xls'
+DATE_QUERY = '2022-01-10'
+MAC_QUERY = 4
+
+batch = CRUDread("READ_start_dt", "[{}]".format(DATE_QUERY))
+
+#  Read an Excel file with XLRD
+rexcel = open_workbook("./excel/record.xls", formatting_info=True, on_demand=True)
+rows = rexcel.sheets()[0].nrows # number of rows
+excel = copy(rexcel) # translate XLRD objects to XLWT objects
+table = excel.get_sheet(0) # operate with XLWT objects
+
+# https://coderedirect.com/questions/689657/copying-only-worksheet-of-xls-to-become-new-worksheet-in-new-xls-using-python
+sheets = []
+table.set_name("sheet1")
+sheets.append(table)
+temp_sheet = deepcopy(table)
+row = 8
+index = 0
+sheets[-1].write(3, 1, "Date: {}".format(DATE_QUERY))
+sheets[-1].write(4, 1, "Machine No: {}".format(MAC_QUERY))
+for b in batch: # Write method, row, column, value
+    if b["machine_no"] != MAC_QUERY: continue
+    for i in b["items"]:
+        sheets[-1].write(row, 1, i["item_name"])
+        sheets[-1].write(row, 2, i["lot_no"])
+        sheets[-1].write(row, 3, 1)
+        sheets[-1].write(row, 4, i["tank_no"])
+        sheets[-1].write(row, 5, b["start_dt"].split('<br>')[1])
+        finish_time = b["finish_dt"].split('<br>')[1] if b["finish_dt"] else "None"
+        sheets[-1].write(row, 6, finish_time)
+        sheets[-1].write(row, 7, "{}, {}".format(b["start_pic"], b["end_pic"]))
+        row += 1
+        index += 1
+        if index % 45 == 0:
+            row = 8
+            w_sheet = deepcopy(temp_sheet)
+            w_sheet.set_name("sheet{}".format(len(sheets)+1))
+            sheets.append(w_sheet)
+print(row)
+excel._Workbook__worksheets = sheets
+excel.save(TEMP_FILE)
+
+
+# itemIndex = 0
+# for temp in b["items"]:
+#     if temp["item_name"] == i["item_name"]:
+#         print("<strong>",itemIndex,"</strong>")
+#         del b["items"][itemIndex]
+#     else: itemIndex += 1

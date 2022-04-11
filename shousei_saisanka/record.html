@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style/style.css">
+    <script type="text/javascript" src="js/script.js"></script>
+    <script src="js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="popup"></div>
+    <div class="record">
+        <div id="recordHead"></div>
+        <div id="recordTable"></div>
+    </div>
+    <div id="loader-holder">
+        <div class="loader">Loading...</div>
+    </div>
+    <div id="backToTop">
+        <button class="blue" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+            <img src="img/top.png">
+        </button>
+    </div>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script>
+        RecordInit();
+        const recHead = "recordHead.php";
+        const recTable = "recordTable.php";
+        var phpIdDict = {
+            "recordHead.php" : "#recordHead",
+            "recordTable.php" : "#recordTable",
+        };
+        function Init(phpKey) {
+            $.ajax({
+                type: 'GET',
+                url: GetChangeUrlPara(phpKey),
+                // data: {param: "xyz"}, //passing some input here
+                dataType: "text",
+                success: function(response){
+                    $(phpIdDict[phpKey]).html(response);
+                    if (phpKey == recTable) {
+                        LoadFilterLotNo();
+                        $("#loader-holder").hide();
+                    } else if (phpKey == recHead) Init(recTable);
+                }
+            });
+        }
+        Init(recHead);
+    </script>
+</body>
+
+</html>
+<!-- for (var phpKey in phpIdDict) {
+    (function(phpKey){
+        $.ajax({
+            type: 'GET',
+            url: GetChangeUrlPara(phpKey),
+            // data: {param: "xyz"}, //passing some input here
+            dataType: "text",
+            success: function(response){
+                $(phpIdDict[phpKey]).html(response);
+                if (phpKey == "recordTable.php")
+                    $("#loader-holder").hide();
+            }
+        });
+    })(phpKey);
+} // }).done(function(data){ console.log(data); -->

@@ -1,0 +1,201 @@
+
+<input type="radio" id="chipLayer_CC" name="chip_layer" value="CC" required>
+<label for="chipLayer_CC">CC</label>
+<input type="radio" id="chipLayer_1Layer" name="chip_layer" value="1 Layer">
+<label for="chipLayer_1Layer">1 Layer</label>
+
+
+$isSubmit = false;
+$submission = LoadFieldStr('submission');
+if ($submission && $isAdd) {
+    $isSubmit = true;
+    LoadPY("CRUD", "CREATE", [$submission]);
+}
+
+$verify = "";
+$errorItems = $itemIDs = array();
+$itemNames = LoadFieldArr("itemName");
+$canVerify = isset($_SESSION["verify"]) || 
+    ($itemNames && !$submission && !$_SESSION["firstLoad"]);
+if ($canVerify) {
+    if (isset($_SESSION["verify"])) {
+        $verify = $_SESSION["verify"]; unset($_SESSION["verify"]);
+    } else {
+        $verify = LoadPY("verify", "", $itemNames);
+    }
+    if (GetDecStr($verify, "isError")) {
+        PrintScript('alert("' . GetDecStr($verify, "msg") . '")');
+        $errorItems = GetDecArr($verify, "errorItems");
+    } else {
+        $itemIDs = GetDecArr($verify, "itemIDs");
+    }
+}
+$itemNames = LoadFieldArr("itemName");
+$lotNos = LoadFieldArr("lotNo");
+$machine_no = LoadFieldStr("machine_no");
+$start_pic = LoadFieldStr("start_pic");
+$end_pic = LoadFieldStr("end_pic");
+$selectAll = 'onClick="this.setSelectionRange(0, this.value.length)"';
+
+function ExtractForm($status, $data)
+{
+    global $itemNames, $lotNos, $machine_no, $start_pic, $end_pic,
+    $start_date, $start_time, $finish_date, $finish_time;
+
+    $itemNames = array();
+    $lotNos = array();
+    $dataStr = "";
+    switch ($status) {
+        case 'NotSubmit':
+            $dataStr = "items"; break;
+        case 'IsSubmit':
+            $dataStr = "rec_items"; break;
+    }
+
+    foreach($data[$dataStr] as $i){
+        if($status == 'NotSubmit' || (isset($i["item_name"]) && isset($i["lot_no"]))) {
+            array_push($itemNames, $i["item_name"]);
+            array_push($lotNos, $i["lot_no"]);
+        }
+    }
+    $machine_no = $data["machine_no"];
+    $start_pic = $data["start_pic"];
+    $end_pic = $data["end_pic"];
+    $start_dt = explode(',', $data["start_dt"]);
+    $start_date = $start_dt[0]; $start_time = $start_dt[1];
+    $finish_dt = explode(',', $data["finish_dt"]);
+    $finish_date = $finish_dt[0]; $finish_time = $finish_dt[1];
+    }
+
+    $editRec = array();
+    if($isEdit && !$submission && !isset($_SESSION["submission"])){
+        $editRec = json_decode(LoadPY("CRUD", "READ_id", [$_SESSION["batchId"]]), true)[0];
+        ExtractForm("NotSubmit", $editRec);
+    }
+    else if (isset($_SESSION["submission"])) {
+        $submission = $_SESSION["submission"]; unset($_SESSION["submission"]);
+        ExtractForm("IsSubmit", $submission);
+    }
+
+"`sheet_id` INT NOT NULL,"
+"`machine_no` INT NOT NULL,"
+"`date` DATE NOT NULL,"
+"`start_time` TIME NOT NULL,"
+"`end_time` TIME,"
+"`item_name` VARCHAR(255),"
+"`key_no` VARCHAR(255),"
+"`lot_no` VARCHAR(255),"
+"`lot_size` VARCHAR(255),"
+"`quantity_plan` INT NOT NULL,"
+"`quantity_actual` INT NOT NULL,"
+"`pattern_no` INT NOT NULL,"
+"`stick_quantity` INT NOT NULL,"
+"`narabe_pic_id` INT NOT NULL,"
+"`group` VARCHAR(255) NOT NULL,"
+
+
+
+query_sheet = ("{} `{}` ("
+    "`id` INT NOT NULL AUTO_INCREMENT,"
+    "`furnace_no` INT NOT NULL,"
+    "`year` INT NOT NULL,"
+    "`checked_by` VARCHAR(255),"
+    "`created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+    "PRIMARY KEY (`id`))")
+
+    
+# if SHEET in tableName:
+#     for s in filterData:
+#         s["created"] = s["created"].strftime(FMT_COMMA_APM)
+#         if loadSheetId and int(loadSheetId) == int(s["id"]):
+#             if MRS in tableName: ordBy = "start_dt"
+#             elif QS_FURNACE in tableName: ordBy = "inspection_dt"
+#             else: ordBy = "input_dt"
+#             query = "SELECT * FROM {} WHERE sheet_id = %s ORDER BY {}"\
+#                 .format(tableName.replace("_sheet", ""), ordBy)
+#             cursor.execute(query, (loadSheetId,))
+#             s["documents"] = ConvertDT(CursorToJSON(), tableName)
+# else:
+
+
+<!-- <tr>
+    <th colspan="100" class="sheet">
+        <button class="delete" onclick="IndexSubmit('delete_sheet', <?= $o['id'] ?>)">DEL</button>
+        <button class="edit" onclick="IndexSubmit('edit_sheet', <?= $o['id'] ?>)">EDIT</button>
+        <button class="add" onclick="">ADD</button>
+        <button class="load" onclick="IndexSubmit('load', <?= $o['id'] ?>)">LOAD</button>
+        <p>
+            Furnace No. <?= $o["furnace_no"] ?>
+            (<?= $o["year"] ?><?php if ($tableName == $QS_FURNACE) : ?>
+                / <?= $o["month"] ?><?php endif ?>)&emsp;
+            Created: <?= $o["created"] ?>&emsp;
+            <?php if ($tableName != $QS_FURNACE) : ?>
+                Checked By:
+                <?php if ($o["checked_by"]) : ?><?= $o["checked_by"] ?>
+                <?php else : ?>~
+                <?php endif ?>
+            <?php endif ?>
+        </p>
+    </th>
+</tr> -->
+
+
+if SHEET in tableName:
+    data = ConvertNameValue(json.loads(data)[0])
+    fields = ["id", "furnace_no", "year", "checked_by"]
+    if QS_FURNACE in tableName: fields.append("month")
+    query = ("UPDATE {} SET {} WHERE id = %(id)s").format(tableName, ConvertUpdateFields(fields))
+    cursor.execute(query, data)
+
+    
+if SHEET in tableName:
+    fieldLi = ["furnace_no", "year"]
+    if QS_FURNACE in tableName: fieldLi.append("month")
+    if "created" in data: fieldLi.append("created")
+    if "checked_by" in data: fieldLi.append("checked_by")
+
+
+# def CreSheetColVal(hasStr, data, colName = "", valName = ""):
+#     has = hasStr in data
+#     colName += ", {}".format(hasStr) if has else ''
+#     valName += ", %({})s".format(hasStr) if has else ''
+#     return colName, valName
+
+
+# if MRS in tableName:
+#     filterData["date"] = filterData["start_dt"].strftime(FMT_DATE_TXT)
+#     filterData["start_dt"] = filterData["start_dt"].strftime(FMT_TIME_APM)
+#     filterData["end_dt"] = filterData["end_dt"].strftime(FMT_TIME_APM) if filterData["end_dt"] else "-"
+# elif :
+#     filterData["inspection_dt"] = filterData["inspection_dt"].strftime(FMT_BR.replace('<br>', ' '))
+# else:
+#     print(filterData["input_dt"])
+#     filterData["input_dt"] = filterData["input_dt"].strftime(FMT_BR)
+#     filterData["output_dt"] = filterData["output_dt"].strftime(FMT_BR) if filterData["output_dt"] else "-"
+
+
+// switch (GetUrlPara("sheet")) {
+// case "mrs":
+//     $tableName = $MRS; break;
+// case "n2":
+//     $tableName = $N2_SAISANKA; break;
+// case "o2":
+//     $tableName = LoadFieldStr("tableName");
+//     if ($tableName) 
+//         $_SESSION["tableName"] = $tableName;
+//     else if (isset($_SESSION["tableName"]))
+//         $tableName = $_SESSION["tableName"];
+//     else {
+//         $tableName = $O2_SAISANKA;
+//         $_SESSION["tableName"] = $tableName;
+//     }
+//     break;
+// }
+
+// $add_document = LoadFieldStr("add_document");
+// $edit_document = LoadFieldStr("edit_document");
+// if ($add_document || $edit_document) {
+//     $_SESSION["addEdit"] = $add_document ? "add" : "edit";
+//     $_SESSION["edit"] = $edit_document;
+//     header("Location: insert.php");
+// }
